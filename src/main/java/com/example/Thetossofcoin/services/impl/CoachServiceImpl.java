@@ -39,6 +39,8 @@ public class CoachServiceImpl implements CoachService {
 
     @Override
     public CoachDto saveCoach(CoachDto coachDto) {
+        Optional<Coach> coach = coachRepository.findByEmail(coachDto.getEmail());
+        if (coach.isPresent()) throw new RuntimeException("Тренер с таким email уже существует");
         Coach savedCoach = coachRepository.save(coachMapper.coachDtoToCoach(coachDto));
         return coachMapper.coachToDto(savedCoach);
     }

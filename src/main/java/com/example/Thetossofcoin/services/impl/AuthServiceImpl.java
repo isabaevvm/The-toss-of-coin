@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -40,10 +42,10 @@ public class AuthServiceImpl implements AuthService {
         boolean isPasswordEqual = coachDto.getPassword().equals(hashedPassword);
 
         if (!isPasswordEqual) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Пароль непраавильный, повторите попытку");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Пароль неправильный, повторите попытку");
         }
 
-        return ResponseEntity.ok(coachService.generateToken(coachDto));
+        return ResponseEntity.ok(coachDto);
     }
 
 }

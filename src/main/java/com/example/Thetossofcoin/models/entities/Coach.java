@@ -12,6 +12,8 @@ public class Coach {
     private Long id;
 
     private String coachName;
+
+    @Column(unique = true)
     private String email;
     private String password;
     private String token;
