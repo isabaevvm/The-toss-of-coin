@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 public class StudentDto {
     private Long id;
     private String studentName;
-    private int yearOfBirth;
-    private int weight;
-    private int height;
+    private Integer yearOfBirth;
+    private Integer weight;
+    private Integer height;
     private GenderDto genderDto;
     private LevelDto levelDto;
     private GenerationDto generationDto;

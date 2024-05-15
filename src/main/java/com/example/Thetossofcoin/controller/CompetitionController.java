@@ -1,5 +1,6 @@
 package com.example.Thetossofcoin.controller;
 
+import com.example.Thetossofcoin.models.AddLimitsForCompetitionCategory;
 import com.example.Thetossofcoin.models.CreateCompetitionCategories;
 import com.example.Thetossofcoin.models.dtos.CompetitionDto;
 import com.example.Thetossofcoin.services.CompetitionService;
@@ -26,5 +27,10 @@ public class CompetitionController {
     @PostMapping("/createCategories")
     public ResponseEntity<?> createCompetitionCategory(@RequestBody CreateCompetitionCategories competitionCategories){
         return ResponseEntity.ok(competitionService.createCompetitionCategory(competitionCategories));
+    }
+
+    @PostMapping("/addLimitsToCompetitionCategory")
+    public ResponseEntity<?> addLimitsToCompetitionCategory(@RequestBody AddLimitsForCompetitionCategory limits, @RequestParam Long competitionCategoryId){
+        return competitionService.addLimitsForCompetitionCategory(limits, competitionCategoryId);
     }
 }

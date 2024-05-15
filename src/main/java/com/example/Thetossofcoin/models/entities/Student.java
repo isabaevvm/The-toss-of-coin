@@ -13,9 +13,9 @@ public class Student {
     private Long id;
 
     private String studentName;
-    private int yearOfBirth;
-    private int weight;
-    private int height;
+    private Integer yearOfBirth;
+    private Integer weight;
+    private Integer height;
 
     @ManyToOne
     @JoinColumn(name = "gender_id", referencedColumnName = "id")

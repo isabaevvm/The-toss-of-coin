@@ -1,19 +1,19 @@
 package com.example.Thetossofcoin.services.impl;
 
 import com.example.Thetossofcoin.dao.CompetitionCategoryRepository;
+import com.example.Thetossofcoin.dao.CompetitionLimitRepository;
 import com.example.Thetossofcoin.dao.CompetitionRepository;
 import com.example.Thetossofcoin.mappers.*;
+import com.example.Thetossofcoin.models.AddLimitsForCompetitionCategory;
 import com.example.Thetossofcoin.models.CreateCompetitionCategories;
-import com.example.Thetossofcoin.models.dtos.CompetitionDto;
-import com.example.Thetossofcoin.models.dtos.GenderDto;
-import com.example.Thetossofcoin.models.dtos.GenerationDto;
-import com.example.Thetossofcoin.models.dtos.LevelDto;
+import com.example.Thetossofcoin.models.dtos.*;
 import com.example.Thetossofcoin.models.entities.*;
 import com.example.Thetossofcoin.services.CompetitionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +26,7 @@ public class CompetitionServiceImpl implements CompetitionService {
     private final LevelMapper levelMapper;
     private final GenderMapper genderMapper;
     private final GenerationMapper generationMapper;
+    private final CompetitionLimitRepository competitionLimitRepository;
 
     @Override
     public CompetitionDto saveCompetition(CompetitionDto competitionDto) {
@@ -63,5 +64,20 @@ public class CompetitionServiceImpl implements CompetitionService {
         }
 
         return ResponseEntity.ok("succes");
+    }
+
+    @Override
+    public ResponseEntity<?> addLimitsForCompetitionCategory(AddLimitsForCompetitionCategory limits, Long competitionCategoryId) {
+        CompetitionCategory competitionCategory = competitionCategoryRepository.findById(competitionCategoryId).orElseThrow( () -> new NullPointerException("такой категории не существует"));
+
+        CompetitionLimit limit = CompetitionLimit.builder()
+                .weightFrom(limits.getWeightFrom())
+                .weightTo(limits.getWeightTo())
+                .heightFrom(limits.getHeightFrom())
+                .heightTo(limits.getHeightTo())
+                .competitionCategory(competitionCategory)
+                .build();
+
+        return ResponseEntity.ok(competitionLimitRepository.save(limit));
     }
 }
